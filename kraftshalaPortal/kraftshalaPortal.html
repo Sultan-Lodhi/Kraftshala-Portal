@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="angular.js"></script>
+<script src="kraftshalaPortal.js"></script>
+<link rel="stylesheet" href="kraftshalaPortal.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+</head>
+<body ng-app="sultanApp" ng-controller="kraftshalaPortal">
+    <div class="card-body cardBodyHeight register">
+        <div class="row">
+            <div class="col-md-3 register-left">
+                <h3>Welcome</h3>
+                <h3>Kraftshala Portal</h3>
+                <input type="button" value="Login" ng-click="loginForm=true"/><br/>
+            </div>
+            <div class="col-md-9 register-right" style="height:640px">
+                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Student</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Instructor</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3 class="register-heading">Register as a Student</h3>
+                        <form id="registerStudent" ng-submit="registerUsers();">
+                            <div class="row register-form">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Name *" ng-model="registerItems.name" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password *" ng-model="registerItems.password" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Your Email *" ng-model="registerItems.email" required/>
+                                    </div>
+                                    <input type="submit" class="btnRegister"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <h3  class="register-heading">Register as an Instructor</h3>
+                        <form id="registerInstructor" ng-submit="registerUsers();">
+                            <div class="row register-form">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Name *" ng-model="registerItems.name" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password *" ng-model="registerItems.password" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Your Email *" ng-model="registerItems.email" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Select Subject:</span>
+                                        <select class="selectpicker" multiple ng-model="registerItems.subject" required>
+                                            <option>English</option>
+                                            <option>Hindi</option>
+                                            <option>Maths</option>
+                                        </select>
+                                    </div>
+                                    <input type="submit" class="btnRegister"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sucess PopUp Starts -->
+    <div class="hoverLay" ng-show="showDialog">
+        <div class="popup-box" style="height:auto; width:360px; border-radius: 20px;">
+            <div class="innerBox">
+                <div class="popUpHeader">
+                    <div class="text-center" style="font-size:15px;padding-bottom:15px;">
+                        <span>{{successMsg}}</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="okBtn"
+                        ng-click="hideDialog()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sucess PopUp Ends -->
+    <!-- Login PopUp Form Starts -->
+    <div class="hoverLay" ng-show="loginForm">
+        <div class="popup-box" style="height:281px; width:450px; border-radius: 20px;">
+            <div class="innerBox">
+                <div class="loginHeader">
+                    Login Details
+                </div>
+                <form id="loginUser" ng-submit="userLogin();">
+                    <div class="form-group loginDivs">
+                        <input type="text" class="form-control" placeholder="Name *" ng-model="registerItems.name" required/>
+                    </div>
+                    <div class="form-group loginDivs">
+                        <input type="email" class="form-control" placeholder="Your Email *" ng-model="registerItems.email" required/>
+                    </div>
+                    <span class="loginSpan" ng-if="errorMsg">*&nbsp;{{errorMsg}}</span>
+                    <div class="text-center">
+                        <button type="button" class="okBtn2"
+                            ng-click="closeLogin()">Cancel</button>
+                        <input type="submit" class="okBtn2" value="Login"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Login PopUp Form Ends -->
+</body>
+</html>

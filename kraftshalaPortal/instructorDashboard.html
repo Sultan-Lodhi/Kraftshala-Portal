@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="angular.js"></script>
+<script src="kraftshalaPortal.js"></script>
+<link rel="stylesheet" href="kraftshalaPortal.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+</head>
+<body ng-app="sultanApp" ng-controller="kraftshalaPortal">
+    <div class="tab">
+        <button class="tablinks" ng-class ="{'active': selectTab == 1}"ng-click="selectTab=1">Assignments</button>
+        <button class="tablinks" ng-class ="{'active': selectTab == 2}"ng-click="selectTab=2;submissions();">Submissions</button>
+        <input type="button" class= "loginPageBtn" value="Login Page" ng-click="goToLoginPage()"/>
+        <span class="instructor">Instructors Dashboard</span>
+    </div>
+    <div ng-if="selectTab == 1">
+        <div class="card-body instructorBody">
+            <div class="assignText"> Add Assignment</div>
+            <form id="addAssignment" ng-submit="addAssignment();">
+                <div class="row register-form">
+                    <div class="inputFields" style="margin-left: 18%;">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Assignment Name *" ng-model="registerItems.name" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject *" ng-model="registerItems.subject" required/>
+                        </div>
+                    </div>
+                    <div class="inputFields" style="margin-left: 2%;">
+                        <div class="form-group">
+                            <input type="file" class="form-control" id='file' onchange="angular.element(this).scope().imageUpload(this.files)" required/>
+                        </div>
+                        <div class="form-group">
+                            Select Deadline: <input type="date" id="birthday" name="birthday" ng-model="registerItems.deadline" required>
+                        </div>
+                    </div>
+                    <div class="fileErrors" ng-if="errorMsg">* &nbsp;{{errorMsg}}</div>
+                    <div class="inputFields" style="margin-left: 27%;">
+                        <input type="submit" class="btnRegister"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng-if="selectTab == 2">
+        <div class="card-body instructorBody">
+            <div class="assignListText" style="display: inline-block;">Assignments Submitted By Students</div>
+            <div style="display: inline-block;float: right;">
+                <input type="text" id="search" name="search" ng-model="registerItems.search">
+                <input type="button" value="Search" ng-click="submissions(2,registerItems.search)">
+            </div>
+            <div style="position: relative !important;height: 390px !important;overflow: auto !important;">
+                <table class="table table-striped">
+                  <thead class="tableBackground">
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Student Name</th>
+                      <th>Email</th>
+                      <th>Subject</th>
+                      <th>Assignment Name</th>
+                      <th>Submission time</th>
+                      <th>Assignment</th>
+                      <th>Submitted Assignment</th>
+                      <th>Grade(Out of 10)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="s in submissionsAssign">
+                      <td>{{$index+1}}</td>
+                      <td>{{s.student_name}}</td>
+                      <td>{{s.email}}</td>
+                      <td>{{s.subject}}</td>
+                      <td>{{s.name}}</td>
+                      <td>{{s.submission_date}}</td>
+                      <td><a target="window" href="//{{s.file_path}}">Questions</a></td>
+                      <td><a target="window" href="//{{s.submitted_assignment}}">Solution</a></td>
+                      <td ng-if="s.grade == 0 || !s.grade"><input type="number" id="grade" name="grade" min="1" max="10" ng-model="registerItems.grade[$index]"><input type="button" value="Submit" ng-click="submitGrade(registerItems.grade[$index],s.email,s.assignment_id,$index)"></td>
+                      <td ng-if="s.grade >=1">{{s.grade}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Sucess PopUp Starts -->
+    <div class="hoverLay" ng-show="showDialog">
+        <div class="popup-box" style="height:auto; width:360px; border-radius: 20px;">
+            <div class="innerBox">
+                <div class="popUpHeader">
+                    <div class="text-center" style="font-size:15px;padding-bottom:15px;">
+                        <span>{{successMsg}}</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="okBtn"
+                        ng-click="hideDialog()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sucess PopUp Ends -->
+</body>
+</html>

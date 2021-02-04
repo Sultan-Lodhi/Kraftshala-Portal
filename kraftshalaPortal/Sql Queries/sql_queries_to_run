@@ -1,0 +1,36 @@
+CREATE TABLE `add_assignment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `subject` varchar(100) NOT NULL,
+  `file_path` varchar(200) NOT NULL,
+  `deadline` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `registered_users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `user_type` smallint(5) unsigned NOT NULL COMMENT '1=> Student, 2=> Teacher',
+  `creation_date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `submissions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `assignment_id` int(11) unsigned NOT NULL,
+  `student_name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `submitted_assignment` varchar(100) NOT NULL,
+  `submission_date` date NOT NULL,
+  `grade` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+
+
