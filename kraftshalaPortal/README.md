@@ -5,7 +5,9 @@ Please follow these steps :
 2. Run the sql queries in your Mysql database. Mysql queries are written in file "sql_queries_to_run"
 under folder "Sql Queries". This will create your table with some data.
 3. You should have a server installed in your system to run php file. I have used apache server.
-4. That's it. Enjoy the code.
+4. To download the assignments files fron the front a new page will open. Just add one leading slash and you will be able to see the files. 
+   (Best way to upload file is uploading to aws but for that you need aws account. So i have just saved the uploaded file to root directory but in href tag it removes the leading slash.)
+5. That's it. Enjoy the code.
 _________________________________________________________________________________
 
 Technologies used in this project :
